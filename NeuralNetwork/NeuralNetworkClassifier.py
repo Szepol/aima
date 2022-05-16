@@ -9,7 +9,7 @@ class Network:
         self.layers.append(output_layer)
 
 
-class NeuralNetwork:
+class NeuralNetworkClassifier:
     def __init__(self, n_hidden=2, n_iter=1500, learning_rate=0.1):
         self.n_hidden = n_hidden
         self.learning_rate = learning_rate
