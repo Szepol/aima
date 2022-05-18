@@ -30,7 +30,7 @@ class Network:
 
 
 class NeuralNetworkClassifier:
-    def __init__(self, n_hidden=2, n_iter=1500, learning_rate=0.1):
+    def __init__(self, n_hidden=2, n_iter=3000, learning_rate=0.075):
         self.n_hidden = n_hidden
         self.learning_rate = learning_rate
         self.n_iter = n_iter
@@ -39,14 +39,13 @@ class NeuralNetworkClassifier:
         self.neural_net = None
 
     def fit(self, X, y):
-        self.n_class = len(np.unique(y))
         n_input = X.shape[1]
         n_output = len(np.unique(y))
         n_neuron = n_input
         output_layer = {'weights': np.random.sample((n_output, n_neuron)) - 0.5, 'name': 'l_output'}
         input_layer = {'weights': np.random.sample((n_neuron, n_input)) - 0.5, 'name': 'l_input'}
         inner_layers = list()
-        for i in range(self.n_hidden - 1):
+        for i in range(self.n_hidden):
             hidden_layer = {'weights': np.random.sample((n_neuron, n_neuron)) - 0.5,
                             'name': "l_hidden{0}".format(i + 1)}
             inner_layers.append(hidden_layer)
@@ -62,7 +61,7 @@ class NeuralNetworkClassifier:
                     outputs = layer['output']
                 # Backward propagation
                 # Output layer
-                target = np.full(n_output, 0.5)
+                target = np.full(n_output, 0.05)
                 target[_y] = 0.95
                 self.neural_net.layers[-1]['deltas'] = self.d_activation_function(
                     self.neural_net.layers[-1]['input']) * (target - outputs)
